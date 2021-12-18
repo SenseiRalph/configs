@@ -1,8 +1,3 @@
-execute pathogen#infect()
-
-syntax on
-filetype plugin indent on
-
 " Switch syntax highlighting on, when the terminal has colors
 syntax on
 
@@ -39,11 +34,10 @@ set ignorecase
 " Search with case sensitivity if term(s) are upper or mixed case
 set smartcase
 
-" A buffer is marked as ‘hidden’ if it has unsaved changes, and it is not
+" A buffer is marked as hidden if it has unsaved changes, and it is not
 " currently loaded in a window.
-" If you try and quit Vim while there are hidden buffers, you will raise an
-" error:
-" E162: No write since last change for buffer “a.txt”
+" If you try and quit Vim while there are hidden buffers, you will raise an error:
+" E162: No write since last change for buffer a.txt
 set hidden
 
 " Turn word wrap off
@@ -65,8 +59,12 @@ set shiftwidth=2
 set number
 set relativenumber
 
-" Highlight tailing whitespace
-set list listchars=tab:»·,trail:·
+" UTF encoding
+set encoding=utf-8
+
+" Set tabs and trailing spaces
+set listchars=tab:»·,trail:·
+set list
 
 " Get rid of the delay when pressing O (for example)
 set timeout timeoutlen=1000 ttimeoutlen=100
@@ -77,14 +75,10 @@ set laststatus=2
 " Hide the toolbar
 set guioptions-=T
 
-" UTF encoding
-set encoding=utf-8
-
 " Autoload files that have changed outside of vim
 set autoread
 
 " Use system clipboard
-" http://stackoverflow.com/questions/8134647/copy-and-paste-in-vim-via-keyboard-between-different-mac-terminals
 set clipboard+=unnamed
 
 " Don't show intro
@@ -110,13 +104,13 @@ set lazyredraw
 " highlight a matching [{()}] when cursor is placed on start/end character
 set showmatch
 
-" Display the mode you're in.
-set showmode
+" Don't display the mode you're in; 'showmode' to display the mode
+set noshowmode
 
-" Complete files like a shell.
+" Complete files like a shell
 set wildmode=list:longest
 
-" Show 3 lines of context around the cursor.
+" Show 3 lines of context around the cursor
 set scrolloff=3
 
 " Set the terminal's title
@@ -126,14 +120,10 @@ set title
 autocmd BufRead,BufNewFile *.md setlocal spell
 setlocal spelllang=fr,en_us,es,uk,ru
 
+" Automatically indent the next line
 set autoindent
 
-set tags=./tags;
-
-set t_Co=256
-
-set fillchars+=vert:\|
-
+" Set GUI cursor.
 set guicursor=i-n-v-c-ci-cr:block,ve:ver25,r:hor20,o:hor50
         \,a:blinkwait0-blinkoff400-blinkon0-Cursor/lCursor
         \,sm:block-blinkwait0-blinkoff150-blinkon175
@@ -142,71 +132,68 @@ set guicursor=i-n-v-c-ci-cr:block,ve:ver25,r:hor20,o:hor50
 " set textwidth=80
 " set colorcolumn=+1
 
-" Keep focus split large, others minimal
-set winwidth=90
-set winheight=7
-set winminheight=7
-set winheight=999
-
 " Set built-in file system explorer to use layout similar to the NERDTree plugin
 let g:netrw_liststyle=3
 
-" Enable built-in matchit plugin
-runtime macros/matchit.vim
+" Vundle start ====================
 
-set nocompatible              " be iMproved, required
-filetype off                  " required
+filetype off
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
+set rtp+=~\.vim\bundle\Vundle.vim
 call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
 
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
+Plugin 'Vundle.vim'
+Plugin 'tabular'
+Plugin 'gruvbox-material'
+Plugin 'lightline'
+Plugin 'vim-workman'
 
-Plugin 'scrooloose/nerdtree'
+call vundle#end()
+filetype plugin indent on
 
-Plugin 'altercation/vim-colors-solarized'
+" Vundle end ======================
 
-Plugin 'airblade/vim-gitgutter'
+let mapleader = " "
 
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
-
+" Exit and write with shortcut
 map <leader>q :q<CR>
 map <leader>w :w<CR>
-map <leader>p :set paste<CR>o<esc>"*]p:set nopaste<CR> " Fix indentation on paste
-inoremap <C-[> <Esc>:w<CR> " Return to normal mode faster + write file
-inoremap jj <C-c> " jj to switch back to normal mode
-nnoremap <leader><leader> <c-^> " Switch between the last two files
-map Q <Nop> " Disable Ex mode
-map K <Nop> " Disable K looking stuff up
-nmap <silent> <F3> :NERDTreeToggle<CR>
-map <leader>\ :NERDTreeToggle<CR>
-let g:NERDTreeWinSize=28
-let NERDTreeShowHidden=1
-map <leader>r :source ~/.vimrc<CR>
-" set background=light " light theme
-set background=dark " dark theme
-colorscheme solarized
 
+" Return to normal mode faster + write file
+inoremap <C-[> <Esc>:w<CR>
+
+" jj to switch back to normal mode
+inoremap zx <Esc>
+
+" Switch between the last two files
+nnoremap <leader><leader> <c-^>
+
+" Set colour scheme options
+let g:neovide_cursor_animation_length=0
+let g:gruvbox_material_enable_bold = 1
+let g:gruvbox_material_enable_italic = 1
+let g:gruvbox_material_palette = 'original'
+let g:gruvbox_material_background = 'hard'
+
+" Set the colour scheme
+colorscheme gruvbox-material
+
+" Set lightline plugin colour scheme
+let g:lightline = {
+      \ 'colorscheme': 'srcery_drk',
+      \ }
+" Make normal mode qwerty when using workman layout
+let g:workman_normal_qwerty = 1
+
+" Set font
+set guifont=consolas:h11
+
+" Set the space between each line
+set linespace=0
+
+" unknown
 highlight Comment cterm=italic
 
 " For en/em dashes, respectively
 autocmd FileType markdown imap -- –
 autocmd FileType markdown imap --- —
-autocmd FileType markdown imap --<space> –<space>

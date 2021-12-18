@@ -139,7 +139,7 @@ let g:netrw_liststyle=3
 
 filetype off
 
-set rtp+=~\.vim\bundle\Vundle.vim
+set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'Vundle.vim'
@@ -169,7 +169,6 @@ inoremap zx <Esc>
 nnoremap <leader><leader> <c-^>
 
 " Set colour scheme options
-let g:neovide_cursor_animation_length=0
 let g:gruvbox_material_enable_bold = 1
 let g:gruvbox_material_enable_italic = 1
 let g:gruvbox_material_palette = 'original'
@@ -186,7 +185,7 @@ let g:lightline = {
 let g:workman_normal_qwerty = 1
 
 " Set font
-set guifont=consolas:h11
+set guifont=Ubuntu\ Mono:h16
 
 " Set the space between each line
 set linespace=0
@@ -197,3 +196,4 @@ highlight Comment cterm=italic
 " For en/em dashes, respectively
 autocmd FileType markdown imap -- –
 autocmd FileType markdown imap --- —
+autocmd FileType markdown imap --<space> –<space>
